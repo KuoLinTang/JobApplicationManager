@@ -1,12 +1,32 @@
 function create_account() {
-    emailElem = document.getElementById('email');
-    pwElem = document.getElementById('pw');
-    pwConElem = document.getElementById('pw-confirm');
+    elem_email = document.getElementById('email');
+    elem_pw = document.getElementById('password');
+    elem_veri_pw = document.getElementById('verify-password');
+    elem_warn = document.getElementById('acc-warn');
 
-    if (pwElem.value === pwConElem.value) {
-        console.log("Email:" + emailElem.value);
-        console.log('Password:' + pwElem.value);
+    str_email = elem_email.value;
+    str_pw = elem_pw.value;
+    str_veri_pw = elem_veri_pw.value;
+    elem_warn.innerHTML = "";
+
+    if (str_email === "" || str_pw === "" || str_veri_pw === "") {
+
+        elem_warn.style.display = 'block';
+        if (str_email === "") {
+            elem_warn.innerHTML = 'Error: Empty email';
+        } else if (str_pw === "") {
+            elem_warn.innerHTML = 'Error: Empty password';
+        } else if (str_veri_pw === "") {
+            elem_warn.innerHTML = 'Error: Cannot verify password';
+        }
     } else {
-        console.log('Error: Passwords do not match')
-    };
+        if (str_pw === str_veri_pw) {
+            elem_warn.style.display = 'none';
+            console.log('Succeed!')
+        } else {
+            elem_warn.style.display = 'block';
+            elem_warn.innerHTML = 'Error: Passwords do not match';
+        }
+    }
+
 };
