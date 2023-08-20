@@ -22,7 +22,35 @@ function create_account() {
     } else {
         if (str_pw === str_veri_pw) {
             elem_warn.style.display = 'none';
-            console.log('Succeed!')
+
+            fetch('/create-account/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "email": str_email,
+                    "password": str_pw
+                })
+            })
+                .then(response => response.json())
+                .then(function (data) {
+                    msg = data['message'];
+                    status_cd = data['status_code'];
+
+                    if (status_cd === 400) {
+                        if (msg.includes('Duplicate entry')) {
+                            elem_warn.style.display = 'block';
+                            elem_warn.innerHTML = 'Error: Email already in use';
+                        } else {
+                            console.log('Error:' + msg);
+                        }
+                    } else {
+                        console.log('Message:' + msg);
+                        window.location.href = '/create-account/success/?email=' + str_email;
+                    }
+                })
+
         } else {
             elem_warn.style.display = 'block';
             elem_warn.innerHTML = 'Error: Passwords do not match';

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Successful</title>
+    <link rel="stylesheet" href="{{ url_for('login.static',filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('login.static',filename='css/styles.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9 col-10">
+                <div class="card shadow-lg px-4">
+                    <div class="card-body">
+                        <div class="mb-3 mt-2 h3">
+                            Sign Up Complete!
+                        </div>
+                        <div id="message" class="mb-4"></div>
+                        <div class="d-grid mb-3">
+                            <a href="/login/" class="btn btn-primary btn-md">Start
+                                exploring</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="{{ url_for('login.static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="../static/js/script.js"></script>
+    <script>
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let email = urlParams.get('email');
+
+        console.log(email);
+
+        elem_msg = document.getElementById('message');
+        elem_msg.innerHTML = "<p class='text-left'>Thank you for joining us! We are sending a verification email to " + email + ". \nBefore you start, please verify your email address by clicking the button in the email.</p>"
+    </script>
+</body>
+
+</html>
