@@ -10,25 +10,39 @@
 </head>
 
 <body>
-    <div class="login-container">
-        <h3 class="mb-4">SIGN UP</h3>
-        <form>
-            <div class="form-group">
-                <input type="email" id="email" class="form-control" placeholder="Email">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9 col-10">
+                <div class="card shadow-lg px-4">
+                    <div class="card-body">
+                        <div class="mb-3 mt-2 h3">
+                            SIGN UP
+                        </div>
+                        <form>
+                            <div class="mb-2 form-floating">
+                                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                                <label for="email">Email address</label>
+                            </div>
+                            <div class="mb-2 form-floating">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="mb-4 form-floating">
+                                <input type="password" class="form-control" id="confirm-password"
+                                    placeholder="Confirm Password">
+                                <label for="confirm-password">Confirm Password</label>
+                            </div>
+                            <div class="mb-3 d-grid gap-2 d-md-block">
+                                <button type="submit" class="btn btn-primary btn-md col-lg-5 col-md-5">Sign
+                                    Up</button>
+                                <a href="login.html"
+                                    class="btn btn-secondary opacity-75 btn-md col-lg-5 col-md-5">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="password" id="pw" class="form-control" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <input type="password" id="pw-confirm" class="form-control" placeholder="Verify Password">
-            </div>
-            <div class="options-container" style="padding: 0px;">
-                <div type="submit" class="btn btn-primary btn-block" onclick="create_account();">CONFIRM</div>
-                <a href="/login/">
-                    <div type="submit" class="btn btn-primary btn-block">CANCEL</div>
-                </a>
-            </div>
-        </form>
+        </div>
     </div>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/script.js"></script>
