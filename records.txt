@@ -1,0 +1,1 @@
+When using Blueprint, the static path in the blueprint and in the app could overlap. To avoid problem, we can change static_folder and template_folder to None in the app.py. Also, we need to use {{ url_for('login.static',filename='/css/styles.css')}} to make sure Flask to catch the correct file.
