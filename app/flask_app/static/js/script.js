@@ -23,7 +23,7 @@ function create_account() {
         if (str_pw === str_veri_pw) {
             elem_warn.style.display = 'none';
 
-            fetch('/create-account/', {
+            fetch('/login/create-account/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ function create_account() {
                         }
                     } else {
                         console.log('Message:' + msg);
-                        window.location.href = '/create-account/success/?email=' + str_email;
+                        window.location.href = '/login/create-account/success/?email=' + str_email;
                     }
                 })
 
