@@ -1,10 +1,11 @@
 import mysql.connector as connector
+from src.secret_config.secret_config import DBSecrets
 
 config = {
-    'user': 'root',
-    'password': '...',
-    'host': '127.0.0.1',  # MySQL 容器的 IP 地址
-    'database': 'db_jobAppManager',
+    'user': DBSecrets.DB_USER,
+    'password': DBSecrets.DB_PASSWORD,
+    'host': DBSecrets.DB_HOST,  # MySQL 容器的 IP 地址
+    'database': DBSecrets.DB_NAME,
     'raise_on_warnings': True
 }
 
