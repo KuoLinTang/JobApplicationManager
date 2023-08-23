@@ -24,7 +24,45 @@ def sign_up():
 
 @blueprint_login.route('/reset-password/')
 def reset_password():
-    return render_template('reset-password.html')
+    return render_template('reset-pw-request.html')
+
+
+@blueprint_login.route('/reset-password-requested/', methods=['POST'])
+def request_reset_password():
+    data = request.json
+    email = data['email']
+
+    # TO DO: first check if the email is registered before sending an email. If not registered,
+
+    from app import mail
+    msg = Message("Reset Password",
+                  recipients=[email])
+
+    # provide a button to verify email (link to /verify-email/ with prefix "login")
+    msg.html = f"""
+        <h3>You are resetting your password!</h3>
+        <section>
+            We are resetting password for email: <span style='font-weight:bold;'>{email}</span>. <br>
+            Please use the button below to reset your password.
+        </section>
+        <form action='127.0.0.1/login/verify-email/{email}' style='margin-top:10px;'>
+            <button type="submit">Reset Password</button>
+        </form>
+        <p>If this is not you, please ignore this email</p>
+    """
+
+    try:
+        mail.send(msg)
+        return {'message': 'Success', 'status_code': 200}
+
+    except Exception as e:
+        return {'message': str(e), 'status_code': 400}
+
+
+@blueprint_login.route('/reset-password-requested/success/', methods=['GET'])
+def request_reset_password_success():
+    email_address = request.args.get('email')
+    return render_template('reset-pw-request-sent.html', email_address=email_address)
 
 
 @blueprint_login.route('/create-account/', methods=['POST'])
@@ -35,7 +73,6 @@ def create_account():
 
     conn = get_connection()
     cursor = conn.cursor()
-
     try:
         query_insert = f"INSERT INTO dim_users (u_email, u_password) VALUES (%s, %s)"
         data_insert = (email, password)
