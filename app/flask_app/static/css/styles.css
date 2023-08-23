@@ -25,7 +25,8 @@ section {
     margin-left: 15px;
 }
 
-.acc-warn {
+.acc-warn,
+.email-warn {
     color: red;
     display: none;
 }
