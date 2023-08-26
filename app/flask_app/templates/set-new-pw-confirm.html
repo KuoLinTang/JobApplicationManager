@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Password</title>
+    <link rel="stylesheet" href="{{ url_for('login.static',filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('login.static',filename='css/styles.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9 col-10">
+                <div class="card shadow-lg px-4">
+                    <div class="card-body">
+                        <div class="mb-3 mt-2 h3">
+                            Password Reset!
+                        </div>
+                        <div class="mb-4">
+                            The password has been reset for <span style="font-weight: bold;">{{email_address}}</span>.
+                            You can start your journey!
+                        </div>
+                        <div class="d-grid mb-3">
+                            <a href="/login/" class="btn btn-primary btn-md">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

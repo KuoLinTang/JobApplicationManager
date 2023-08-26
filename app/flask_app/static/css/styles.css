@@ -26,7 +26,12 @@ section {
 }
 
 .acc-warn,
-.email-warn {
+.email-warn,
+.pw-warn {
     color: red;
+    display: none;
+}
+
+#hidden-email {
     display: none;
 }

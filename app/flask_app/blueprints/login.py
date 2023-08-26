@@ -32,8 +32,23 @@ def request_reset_password():
     data = request.json
     email = data['email']
 
-    # TO DO: first check if the email is registered before sending an email. If not registered,
+    # check if the email is in the database
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        query_check = f"select * from dim_users where u_email = '{email}'"
+        cursor.execute(operation=query_check)
+        result = cursor.fetchall()
+        # close connection
+        cursor.close()
+        conn.close()
+        if len(result) == 0:
+            print('out')
+            return {'message': 'Email does not exists', 'status_code': 300}
+    except Exception as e:
+        return {'message': str(e), 'status_code': 400}
 
+    # sending email after checking if email is in the database
     from app import mail
     msg = Message("Reset Password",
                   recipients=[email])
@@ -45,16 +60,14 @@ def request_reset_password():
             We are resetting password for email: <span style='font-weight:bold;'>{email}</span>. <br>
             Please use the button below to reset your password.
         </section>
-        <form action='127.0.0.1/login/verify-email/{email}' style='margin-top:10px;'>
+        <form action='127.0.0.1/login/reset-password/set-new-password/{email}' style='margin-top:10px;'>
             <button type="submit">Reset Password</button>
         </form>
         <p>If this is not you, please ignore this email</p>
     """
-
     try:
         mail.send(msg)
         return {'message': 'Success', 'status_code': 200}
-
     except Exception as e:
         return {'message': str(e), 'status_code': 400}
 
@@ -65,21 +78,52 @@ def request_reset_password_success():
     return render_template('reset-pw-request-sent.html', email_address=email_address)
 
 
+@blueprint_login.route('/reset-password/set-new-password/<email_address>', methods=['GET'])
+def set_new_password(email_address):
+    return render_template('set-new-pw.html', email_address=email_address)
+
+
+@blueprint_login.route('/reset-password/send-new-password/', methods=['POST'])
+def send_new_password():
+    data = request.json
+    email_address = data['email']
+    password = data['password']
+
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        query_update = f"UPDATE dim_users SET u_password = '{password}' WHERE u_email = '{email_address}'"
+        cursor.execute(operation=query_update)
+        conn.commit()
+        # close connection
+        cursor.close()
+        conn.close()
+        return {'message': 'Password Updated', 'status_code': 200}
+    except Exception as e:
+        return {'message': str(e), 'status_code': 400}
+
+
+@blueprint_login.route('/reset-password/password-updated/', methods=['GET'])
+def password_updated():
+    email_address = request.args.get('email')
+    return render_template('set-new-pw-confirm.html', email_address=email_address)
+
+
+# create account
 @blueprint_login.route('/create-account/', methods=['POST'])
 def create_account():
     data = request.json
     email = data['email']
     password = data['password']
 
-    conn = get_connection()
-    cursor = conn.cursor()
     try:
+        conn = get_connection()
+        cursor = conn.cursor()
         query_insert = f"INSERT INTO dim_users (u_email, u_password) VALUES (%s, %s)"
         data_insert = (email, password)
         cursor.execute(operation=query_insert, params=data_insert)
         conn.commit()
         return {'message': 'Success', 'status_code': 200}
-
     except Exception as e:
         return {'message': str(e), 'status_code': 400}
 
@@ -110,15 +154,16 @@ def create_account_success():
 
 @blueprint_login.route('/verify-email/<email_address>', methods=['GET'])
 def verify_email(email_address):
-    print(email_address)
 
     conn = get_connection()
     cursor = conn.cursor()
-
     try:
         query_update = f"UPDATE dim_users SET is_verified = TRUE WHERE u_email = '{email_address}'"
         cursor.execute(operation=query_update)
         conn.commit()
+        # close connection
+        cursor.close()
+        conn.close()
 
         return render_template('verify-email.html', email_address=email_address)
 
