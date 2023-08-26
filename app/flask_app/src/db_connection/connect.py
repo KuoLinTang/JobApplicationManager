@@ -16,10 +16,12 @@ def get_connection() -> connector.connection_cext.CMySQLConnection:
         connection = connector.connect(**config)
         if connection.is_connected():
             print("Connected to MySQL database")
+            return connection
+
         else:
             raise Exception('Database not connected')
+
     except Exception as e:
         print('Connection failed')
         print(f'Exception: {e}')
-
-    return connection
+        raise Exception(e)
