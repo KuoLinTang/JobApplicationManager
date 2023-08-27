@@ -7,7 +7,7 @@ blueprint_login = Blueprint(
     'login',  # blueprint name, can be used to specify static file path
     __name__,
     # we must go back to the main directory where app.py is located, using relative path
-    template_folder='../templates',
+    template_folder='../templates/login',
     static_folder='../static'
 )
 
@@ -15,6 +15,30 @@ blueprint_login = Blueprint(
 @blueprint_login.route('/')
 def sign_in():
     return render_template('login.html')
+
+
+@blueprint_login.route('/verify/', methods=['POST'])
+def sign_in_verify():
+    data = request.json
+    email = data['email']
+    password = data['password']
+
+    # check if email and password match the record
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        query_check = f"select * from dim_users where u_email = '{email}' and u_password = '{password}'"
+        cursor.execute(operation=query_check)
+        result = cursor.fetchall()
+        # close connection
+        cursor.close()
+        conn.close()
+        if len(result) == 0:
+            return {'message': 'Email does not exists', 'status_code': 300}
+        else:
+            return {'message': 'Login credentials match', 'status_code': 200}
+    except Exception as e:
+        return {'message': str(e), 'status_code': 400}
 
 
 @blueprint_login.route('/signup/')
@@ -43,7 +67,6 @@ def request_reset_password():
         cursor.close()
         conn.close()
         if len(result) == 0:
-            print('out')
             return {'message': 'Email does not exists', 'status_code': 300}
     except Exception as e:
         return {'message': str(e), 'status_code': 400}

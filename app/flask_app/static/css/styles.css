@@ -27,7 +27,8 @@ section {
 
 .acc-warn,
 .email-warn,
-.pw-warn {
+.pw-warn,
+.warn {
     color: red;
     display: none;
 }
