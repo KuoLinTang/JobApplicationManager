@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password</title>
+    <title>Sign In</title>
     <link rel="stylesheet" href="{{ url_for('login.static',filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('login.static',filename='css/styles.css') }}">
 </head>
@@ -16,19 +16,34 @@
                 <div class="card shadow-lg px-4">
                     <div class="card-body">
                         <div class="mb-3 mt-2 h3">
-                            Change Password
+                            SIGN IN
                         </div>
                         <form>
-                            <div class="mb-3 form-floating">
+                            <div class="mb-2 form-floating">
                                 <input type="email" class="form-control" id="email" placeholder="Enter email">
                                 <label for="email">Email address</label>
                             </div>
-                            <div class="email-warn mb-3" id="email-warn"></div>
-                            <div class="d-grid mb-3">
-                                <div class="btn btn-primary btn-md" onclick="reset_password();">Change Password</div>
+                            <div class="mb-3 form-floating">
+                                <input type="password" class="form-control" id="password" placeholder="Password"
+                                    autocomplete="on">
+                                <label for="password">Password</label>
                             </div>
-                            <div>
-                                <span>Already have an account? <a href="/login/">Sign In</a></span>
+                            <div class="d-grid mb-3">
+                                <div class="btn btn-primary btn-md" onclick="sign_in();">Login</div>
+                            </div>
+                            <div class="warn mb-2" id="warn"></div>
+                            <div class="mb-1">
+                                <span>
+                                    Do not have an account?
+                                    <a href="/login/signup/">
+                                        Register
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="mb-3">
+                                <a href="/login/reset-password/">
+                                    Forgot your password?
+                                </a>
                             </div>
                         </form>
                     </div>

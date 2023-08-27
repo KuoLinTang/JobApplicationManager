@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="{{ url_for('login.static',filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('login.static',filename='css/styles.css') }}">
 </head>
@@ -16,34 +16,41 @@
                 <div class="card shadow-lg px-4">
                     <div class="card-body">
                         <div class="mb-3 mt-2 h3">
-                            SIGN IN
+                            Create Account
                         </div>
+                        <section>
+                            <div>Password Requirements</div>
+                            <ul>
+                                <li>A minimum of 10 characters</li>
+                                <li>A numeric character</li>
+                                <li>A lowercase character</li>
+                                <li>A special character</li>
+                                <li>An uppercase character</li>
+                                <li>An alphabetic character</li>
+                            </ul>
+                        </section>
                         <form>
                             <div class="mb-2 form-floating">
                                 <input type="email" class="form-control" id="email" placeholder="Enter email">
                                 <label for="email">Email address</label>
                             </div>
-                            <div class="mb-3 form-floating">
+                            <div class="mb-2 form-floating">
                                 <input type="password" class="form-control" id="password" placeholder="Password"
                                     autocomplete="on">
                                 <label for="password">Password</label>
                             </div>
-                            <div class="d-grid mb-3">
-                                <div class="btn btn-primary btn-md">Login</div>
+                            <div class="mb-4 form-floating">
+                                <input type="password" class="form-control" id="verify-password"
+                                    placeholder="Verify Password" autocomplete="on">
+                                <label for="verify-password">Verify Password</label>
                             </div>
-                            <div class="mb-1">
-                                <span>
-                                    Do not have an account?
-                                    <a href="/login/signup/">
-                                        Register
-                                    </a>
-                                </span>
+                            <div class="mb-3 d-grid gap-2 d-lg-block d-md-block">
+                                <div class="btn btn-primary btn-md col-lg-5 col-md-5" onclick="create_account();">Sign
+                                    Up</div>
+                                <a href="/login/"
+                                    class="btn btn-secondary opacity-75 btn-md col-lg-5 col-md-5">Cancel</a>
                             </div>
-                            <div class="mb-3">
-                                <a href="/login/reset-password/">
-                                    Forgot your password?
-                                </a>
-                            </div>
+                            <div class="warn mb-2" id="warn"></div>
                         </form>
                     </div>
                 </div>
