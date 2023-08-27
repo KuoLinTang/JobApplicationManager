@@ -14,6 +14,4 @@ blueprint_main = Blueprint(
 
 @blueprint_main.route('/', methods=["GET"])
 def main_page():
-    email_address = request.args.get('email')
-    password = request.args.get('password')
-    return render_template('main-page.html', email_address=email_address, password=password)
+    return render_template('main-page.html')

@@ -11,10 +11,17 @@
 
 <body>
     <h3>Welcome to Job Application Manager</h3>
-    <div>{{email_address}}</div>
-    <div>{{password}}</div>
+    <div id="email"></div>
+    <div id="password"></div>
     <script src="{{ url_for('main.static',filename='js/bootstrap.min.js')}}"></script>
     <script src="{{ url_for('main.static',filename='js/script.js')}}"></script>
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let email = atob(urlParams.get('email'));
+        let password = atob(urlParams.get('password'));
+        document.getElementById('email').textContent = email;
+        document.getElementById('password').textContent = password;
+    </script>
 </body>
 
 </html>

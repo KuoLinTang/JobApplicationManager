@@ -19,7 +19,7 @@
                             Email Sent!
                         </div>
                         <div class="mb-4">
-                            We have sent an email to <span style="font-weight: bold;">{{email_address}}</span>.
+                            We have sent an email to <span style="font-weight: bold;" id="email"></span>.
                             Please follow the instructions to reset your password.
                         </div>
                         <div class="d-grid mb-3">
@@ -30,6 +30,11 @@
             </div>
         </div>
     </div>
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let email = atob(urlParams.get('email'));
+        document.getElementById('email').textContent = email;
+    </script>
 </body>
 
 </html>

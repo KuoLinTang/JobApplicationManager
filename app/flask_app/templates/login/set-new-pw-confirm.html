@@ -19,7 +19,7 @@
                             Password Reset!
                         </div>
                         <div class="mb-4">
-                            The password has been reset for <span style="font-weight: bold;">{{email_address}}</span>.
+                            The password has been reset for <span style="font-weight: bold;" id="email"></span>.
                             You can start your journey!
                         </div>
                         <div class="d-grid mb-3">
@@ -30,6 +30,11 @@
             </div>
         </div>
     </div>
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let email = atob(urlParams.get('email'));
+        document.getElementById('email').textContent = email;
+    </script>
 </body>
 
 </html>

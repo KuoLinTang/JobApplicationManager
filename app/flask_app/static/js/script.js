@@ -95,7 +95,7 @@ function reset_password() {
                     elem_warn.style.display = 'block';
                     elem_warn.innerHTML = 'Error: Email does not exist';
                 } else {
-                    window.location.href = '/login/reset-password-requested/success/?email=' + str_email;
+                    window.location.href = '/login/reset-password-requested/success/?email=' + encodeURIComponent(btoa(str_email));
                 }
             })
     }
@@ -143,7 +143,7 @@ function send_new_password() {
                 if (status_cd === 400) {
                     console.log('Error:' + msg);
                 } else {
-                    window.location.href = '/login/reset-password/password-updated/?email=' + str_email;
+                    window.location.href = '/login/reset-password/password-updated/?email=' + encodeURIComponent(btoa(str_email));
                 }
             })
     }
@@ -187,9 +187,12 @@ function sign_in() {
                     console.log('Error:' + msg);
                 } else if (status_cd === 300) {
                     elem_warn.style.display = 'block';
-                    elem_warn.innerHTML = 'Error: Email or password does not exist';
+                    elem_warn.innerHTML = 'Error: Email or password does not match';
+                } else if (status_cd === 301) {
+                    elem_warn.style.display = 'block';
+                    elem_warn.innerHTML = 'Error: Email is not verified';
                 } else {
-                    window.location.href = '/main/?email=' + str_email + '&password=' + str_pw;
+                    window.location.href = '/main/?email=' + encodeURIComponent(btoa(str_email)) + '&password=' + encodeURIComponent(btoa(str_pw));
                 }
             })
     }

@@ -30,13 +30,17 @@ def sign_in_verify():
         query_check = f"select * from dim_users where u_email = '{email}' and u_password = '{password}'"
         cursor.execute(operation=query_check)
         result = cursor.fetchall()
+        print(result)
         # close connection
         cursor.close()
         conn.close()
         if len(result) == 0:
             return {'message': 'Email does not exists', 'status_code': 300}
         else:
-            return {'message': 'Login credentials match', 'status_code': 200}
+            if result[0][3] == 0:
+                return {'message': 'Email is not verified', 'status_code': 301}
+            else:
+                return {'message': 'Login credentials match', 'status_code': 200}
     except Exception as e:
         return {'message': str(e), 'status_code': 400}
 
@@ -97,8 +101,7 @@ def request_reset_password():
 
 @blueprint_login.route('/reset-password-requested/success/', methods=['GET'])
 def request_reset_password_success():
-    email_address = request.args.get('email')
-    return render_template('reset-pw-request-sent.html', email_address=email_address)
+    return render_template('reset-pw-request-sent.html')
 
 
 @blueprint_login.route('/reset-password/set-new-password/<email_address>', methods=['GET'])
@@ -128,8 +131,7 @@ def send_new_password():
 
 @blueprint_login.route('/reset-password/password-updated/', methods=['GET'])
 def password_updated():
-    email_address = request.args.get('email')
-    return render_template('set-new-pw-confirm.html', email_address=email_address)
+    return render_template('set-new-pw-confirm.html')
 
 
 # create account
