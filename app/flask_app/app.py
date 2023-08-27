@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_mail import Mail
 from blueprints.login import blueprint_login
+from blueprints.main import blueprint_main
 from src.secret_config.secret_config import MailSecrets
 
 app = Flask(
@@ -19,6 +20,7 @@ mail = Mail(app)
 
 # All related urls will have this prefix
 app.register_blueprint(blueprint_login, url_prefix='/login')
+app.register_blueprint(blueprint_main, url_prefix='/main')
 
 
 if __name__ == "__main__":
